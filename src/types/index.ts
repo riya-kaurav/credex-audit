@@ -7,8 +7,8 @@ export type AITool =
   | 'GitHub Copilot'
   | 'Windsurf'
   | 'Anthropic API'
-  | 'OpenAI API';
-
+  | 'OpenAI API'
+  | 'Credex';
 
 export type ToolPlan = string;
 
@@ -59,3 +59,4 @@ export interface Lead {
   teamSize?: number;
   auditId: string;
 }
+
