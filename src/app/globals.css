@@ -128,3 +128,14 @@
     @apply font-sans;
   }
 }
+
+:root {
+  --green-primary: #166534;    /* dark green — buttons, accents */
+  --green-light: #dcfce7;      /* light green — success badges, highlights */
+  --green-border: #16a34a;     /* medium green — borders, hover states */
+  --text-primary: #0f172a;     /* near black — headings */
+  --text-secondary: #475569;   /* gray — body text, labels */
+  --bg-white: #ffffff;         /* page background */
+  --bg-subtle: #f8fafc;        /* card backgrounds */
+  --border: #e2e8f0;           /* dividers, input borders */
+}
