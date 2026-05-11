@@ -109,12 +109,6 @@ export function getRecommendationForTool(
   const currentSpend =
     input.monthlySpend;
 
-  // Internal comparison cost
-  const calculatedCurrentSpend =
-    calculateMonthlyCost(
-      currentPlan.pricePerSeat,
-      input.seats
-    );
 
   // Check 1 — Invalid team sizing
   const isTeamPlan =

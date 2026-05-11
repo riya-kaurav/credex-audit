@@ -114,11 +114,11 @@ export default function AuditResults({ result, formData }: AuditResultsProps) {
       {result.savingsCategory === 'optimal' && !reportSaved && (
         <div className="bg-gray-50 border border-gray-200 rounded-lg px-6 py-4 mb-4">
           <p className="text-sm text-gray-600">
-            You're already spending well.{' '}
+            You are already spending well.{' '}
             <span className="font-medium text-gray-900">
               Save your report
             </span>{' '}
-            above and we'll notify you when new optimizations apply to your
+            above and we will notify you when new optimizations apply to your
             stack.
           </p>
         </div>

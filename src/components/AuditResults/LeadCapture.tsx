@@ -76,7 +76,7 @@ export default function LeadCapture({ auditResult, onSaved }: LeadCaptureProps) 
         Save your report
       </h3>
       <p className="text-xs text-gray-500 mb-4">
-        Get a copy of this audit sent to your inbox. We'll also notify you when
+        Get a copy of this audit sent to your inbox. We will also notify you when
         new optimizations apply to your stack.
       </p>
 

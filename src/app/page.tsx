@@ -48,7 +48,7 @@ export default function Home() {
 
         {/* Headline */}
         <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 leading-tight tracking-tight mb-4">
-          Find out if you're overpaying
+          Find out if you were overpaying
           <br />
           for AI tools.
         </h1>
