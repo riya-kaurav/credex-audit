@@ -7,7 +7,7 @@
 
 
 
-import { AITool, UseCase } from '@/types';
+import { AITool, UseCase } from '../types';
 
 export interface ToolPlanConfig {
   name: string;

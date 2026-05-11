@@ -1,5 +1,4 @@
 
-
 import {
   AuditResult,
   FormData,
@@ -7,13 +6,13 @@ import {
   ToolInput,
   ToolRecommendation,
   UseCase
-} from '@/types';
+} from '../types';
 
 import {
   PRICING_DATA,
   ToolConfig,
   ToolPlanConfig
-} from '@/lib/pricing-data';
+} from './pricing-data';
 
 // Get current selected plan config
 function getCurrentPlan(
@@ -50,10 +49,13 @@ function findCheapestValidPlan(
     const supportsUseCase =
       plan.bestFor.includes(useCase);
 
+      const isPaid = plan.pricePerSeat > 0;
+
     return (
       satisfiesMinSeats &&
       satisfiesMaxSeats &&
-      supportsUseCase
+      supportsUseCase &&
+      isPaid
     );
   });
 
