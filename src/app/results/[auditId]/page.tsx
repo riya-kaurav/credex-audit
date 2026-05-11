@@ -14,6 +14,7 @@ export default function ResultsPage() {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+  const loadAudit = () => {
     try {
       const storedResult = sessionStorage.getItem('audit_result');
       const storedForm = sessionStorage.getItem('audit_form');
@@ -25,7 +26,6 @@ export default function ResultsPage() {
 
       const parsedResult = JSON.parse(storedResult) as AuditResult;
 
-      // Verify the auditId matches
       if (parsedResult.auditId !== auditId) {
         setNotFound(true);
         return;
@@ -36,7 +36,9 @@ export default function ResultsPage() {
     } catch {
       setNotFound(true);
     }
-  }, [auditId]);
+  };
+  loadAudit();
+}, [auditId]);
 
   // Loading state
   if (!result && !notFound) {

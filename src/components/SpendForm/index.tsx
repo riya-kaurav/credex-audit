@@ -29,7 +29,8 @@ export default function SpendForm() {
   const [hydrated, setHydrated] = useState(false);
 
   // Load from localStorage on mount
-  useEffect(() => {
+ useEffect(() => {
+  const loadSaved = () => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
@@ -40,7 +41,9 @@ export default function SpendForm() {
       // ignore parse errors
     }
     setHydrated(true);
-  }, []);
+  };
+  loadSaved();
+}, []);
 
   // Persist to localStorage on every change
   useEffect(() => {
