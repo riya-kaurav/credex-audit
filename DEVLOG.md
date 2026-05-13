@@ -7,16 +7,16 @@
 **Hours worked:** 4
 
 **What I did:**
-Set up the Next.js 14 project with TypeScript and Tailwind. Configured Supabase, created the database schema (audits and leads tables). Defined all core TypeScript types in src/types/index.ts. Built the pricing data file with verified pricing for all 8 tools. Started reaching out to potential users for interviews.
+Set up the Next.js 14 project with TypeScript and Tailwind. Ran into shadcn CLI network issues — resolved by selecting Base preset after the Radix option failed to connect. Installed Radix UI primitives directly. Configured Supabase by running the shadcn Supabase command which created client.ts, middleware.ts, and server.ts. Created the database schema with audits and leads tables via Supabase SQL editor. Defined all core TypeScript types in src/types/index.ts — AITool union, ToolInput, FormData, AuditResult, Lead. Built the pricing data file with verified pricing for all 8 tools by checking each vendor pricing page directly. Started reaching out to college friends for user interviews.
 
 **What I learned:**
-The shadcn CLI had network issues so I installed Radix UI primitives directly. Also learned that crypto.randomUUID() works as a browser global — no need to import the Node crypto module.
+The shadcn CLI uses NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY instead of the standard NEXT_PUBLIC_SUPABASE_ANON_KEY. Also learned that crypto.randomUUID() is available as a browser global — importing the Node crypto module breaks in client components.
 
 **Blockers / what I'm stuck on:**
-Supabase anon key vs publishable key naming inconsistency between the shadcn setup command and standard Supabase docs. Resolved by checking the generated client.ts file.
+shadcn network timeout on first init attempt. Resolved by trying the Base preset.
 
 **Plan for tomorrow:**
-Build the audit engine core logic and spend input form.
+Build the audit engine core logic with all 4 checks and start the spend input form.
 
 ---
 
@@ -24,7 +24,7 @@ Build the audit engine core logic and spend input form.
 
 **Hours worked:** 0
 
-**Reason:** [ADD YOUR REASON — college, personal commitment, etc. Be honest. Honesty scores higher than fake entries.]
+**Reason:** College practical examination. No work done on the project today.
 
 ---
 
@@ -33,16 +33,16 @@ Build the audit engine core logic and spend input form.
 **Hours worked:** 5
 
 **What I did:**
-Built the complete audit engine in src/lib/audit-engine.ts. Implemented all 4 checks: team size mismatch, cheaper plan detection, use case mismatch, and redundancy detection for overlapping tools (Cursor + Copilot, Claude + ChatGPT). Built the spend input form with localStorage persistence and ToolRow component.
+Built the complete audit engine in src/lib/audit-engine.ts with all 4 checks: team size mismatch, cheaper plan detection, wrong tool for use case, and redundancy detection. Added Cursor + Copilot redundancy check and Claude + ChatGPT overlap check. Built the spend input form with localStorage persistence. Built all results page components — HeroSection, ToolCard, CredexCTA, LeadCapture. Wired up the full form submission to results page flow via sessionStorage.
 
 **What I learned:**
-The findCheapestValidPlan function was initially returning free-tier plans as valid cheaper alternatives — which isn't honest advice since free plans have usage limits that break team workflows. Added an isPaid filter to exclude pricePerSeat === 0 plans from recommendations.
+findCheapestValidPlan was returning free tier plans as valid cheaper alternatives — wrong because free plans have usage limits that break workflows. Added isPaid filter (pricePerSeat > 0). The redundancy check was pushing a duplicate recommendation instead of replacing — fixed with findIndex.
 
 **Blockers / what I'm stuck on:**
-The redundancy check was pushing a duplicate recommendation for GitHub Copilot instead of replacing the existing one. Fixed by using findIndex and replacing the array element directly.
+Results page was 404 because audit page was in wrong location. Fixed by creating src/app/audit/page.tsx.
 
 **Plan for tomorrow:**
-Build the results page components and wire up the full form → results flow.
+Fix remaining bugs, set up tests, get CI working, deploy to Vercel.
 
 ---
 
@@ -51,67 +51,57 @@ Build the results page components and wire up the full form → results flow.
 **Hours worked:** 6
 
 **What I did:**
-Built all results page components: HeroSection, ToolCard, CredexCTA, LeadCapture. Wired up the full form submission → sessionStorage → results page flow. Fixed crypto.randomUUID browser compatibility issue. Set up Vitest, wrote 8 tests for the audit engine — all passing. Set up GitHub Actions CI workflow. Fixed multiple ESLint errors (unescaped apostrophes in JSX, setState in effect pattern). Deployed to Vercel.
+Fixed crypto.randomUUID browser error by removing Node crypto import. Set up Vitest — hit Windows path alias resolution issues, fixed by switching to relative imports in test files and src/lib. Wrote 8 tests for the audit engine, all passing. Set up GitHub Actions CI. Fixed multiple ESLint errors: unescaped apostrophes in JSX (replaced with &apos;), setState in useEffect (wrapped in inner function), unused variable in audit engine. Deployed to Vercel. Built the landing page.
 
 **What I learned:**
-ESLint's react/no-unescaped-entities rule requires apostrophes in JSX text to be written as &apos; — easy to miss when writing natural language copy. Also learned that calling setState directly inside useEffect body triggers the react-hooks/set-state-in-effect rule — wrapping in an inner function resolves it.
+ESLint react/no-unescaped-entities catches apostrophes in JSX text. Any word like "you&apos;re" or "we&apos;ll" needs entity encoding. The react-hooks/set-state-in-effect rule fires when setState is called directly in useEffect body — wrapping in an inner function resolves it cleanly.
 
 **Blockers / what I'm stuck on:**
-Vitest alias resolution on Windows — the @/ path alias works in Next.js but not in Vitest on Windows due to how URL paths are resolved. Fixed by using relative imports in test files and src files.
+CI failing due to package-lock.json out of sync. Fixed by running npm install locally and committing updated lock file, then switching from npm ci to npm install in workflow.
 
 **Plan for tomorrow:**
-Write all documentation files. Complete user interviews. Add OG meta tags.
+Write all documentation files. Conduct user interviews.
 
 ---
 
 ## Day 5 — 2026-05-12
 
-**Hours worked:** [FILL IN]
+**Hours worked:** 5
 
 **What I did:**
-[FILL IN — write what you actually do tomorrow. Docs, interviews, OG tags, final polish.]
+Wrote and committed all documentation files: ARCHITECTURE.md with Mermaid diagram, METRICS.md, GTM.md, ECONOMICS.md, TESTS.md, PRICING_DATA.md. Conducted 2 of 3 user interviews with college friends. Took screenshots of deployed app.
 
 **What I learned:**
-[FILL IN]
+Writing ECONOMICS.md forced clear thinking about what conversion rate makes this tool worth building. The math showed it is profitable from the first conversion at zero paid CAC.
 
 **Blockers / what I'm stuck on:**
-[FILL IN]
+Third interview scheduled for tomorrow morning.
 
 **Plan for tomorrow:**
-[FILL IN]
+Complete third interview. Finalize all docs. Submit.
 
 ---
 
 ## Day 6 — 2026-05-13
 
-**Hours worked:** [FILL IN]
+**Hours worked:** 4
 
 **What I did:**
-[FILL IN — final submission day. What you finished, what you submitted.]
+Completed third user interview. Wrote USER_INTERVIEWS.md. Finalized DEVLOG and REFLECTION. Added screenshots to README. Final end-to-end test of deployed app — form, results, lead capture, shareable URL all working. Confirmed CI green and 5 distinct commit days. Submitted Google Form.
 
 **What I learned:**
-[FILL IN]
+Users were far less aware of their AI spend than I expected. One person had to check their bank app to give me a number. That validated the core premise more than any assumption made during building.
 
 **Blockers / what I'm stuck on:**
-[FILL IN]
+None. Submission complete.
 
 **Plan for tomorrow:**
-Submitted. Waiting for Round 2 results.
+Waiting for Round 2 results.
 
 ---
 
-## Day 7 — [DATE]
+## Day 7 — 2026-05-14
 
-**Hours worked:** [FILL IN or 0]
+**Hours worked:** 0
 
-**What I did / Reason if 0:**
-[FILL IN]
-
-**What I learned:**
-[FILL IN]
-
-**Blockers / what I'm stuck on:**
-[FILL IN]
-
-**Plan for tomorrow:**
-[FILL IN]
+**Reason:** Submission was completed on Day 6. Rest day.
