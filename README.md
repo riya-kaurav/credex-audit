@@ -7,8 +7,10 @@ SpendLens helps startup founders and engineering managers find out exactly where
 ---
 
 ## Screenshots
-![Ss 1](<img width="1920" height="1020" alt="SpendLens — Free AI Spend Audit for Startups and 1 more page - Personal - Microsoft​ Edge 13-05-2026 10_33_34" src="https://github.com/user-attachments/assets/9aa23d2c-3afc-4086-a224-42783dc6c6b8" />
-)
+
+![Ss 1](https://github.com/user-attachments/assets/9aa23d2c-3afc-4086-a224-42783dc6c6b8)
+![Ss 2](https://github.com/user-attachments/assets/601fca42-1c4f-4008-b80e-4e0d71d55419)
+![Ss 3](https://github.com/user-attachments/assets/9ff2a952-5bfd-4f2e-af5f-b98c0e3ff355)
 
 
 ---
