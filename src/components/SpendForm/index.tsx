@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FormData, ToolInput, UseCase } from '@/types';
-import { runAudit } from '@/lib/audit-engine';
 import ToolRow from './ToolRow';
 import { AI_TOOLS, TOOL_PLANS, USE_CASES } from './constants';
 
@@ -85,21 +84,31 @@ export default function SpendForm() {
     }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setIsLoading(true);
+ async function handleSubmit(e: React.FormEvent) {
+  e.preventDefault();
+  setIsLoading(true);
 
-    try {
-      const result = runAudit(form);
-      // Store result in sessionStorage to pass to results page
-      sessionStorage.setItem('audit_result', JSON.stringify(result));
-      sessionStorage.setItem('audit_form', JSON.stringify(form));
-      router.push(`/results/${result.auditId}`);
-    } catch (err) {
-      console.error('Audit failed:', err);
-      setIsLoading(false);
-    }
+  try {
+    const response = await fetch('/api/audit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+
+    if (!response.ok) throw new Error('Audit API failed');
+
+    const { result, formData } = await response.json();
+
+    // Store in sessionStorage as fast path for results page
+    sessionStorage.setItem('audit_result', JSON.stringify(result));
+    sessionStorage.setItem('audit_form', JSON.stringify(formData));
+
+    router.push(`/results/${result.auditId}`);
+  } catch (err) {
+    console.error('Audit failed:', err);
+    setIsLoading(false);
   }
+}
 
   const totalMonthlySpend = form.tools.reduce(
     (sum, t) => sum + (t.monthlySpend || 0),
