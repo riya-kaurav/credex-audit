@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { AuditResult } from '@/types';
-import { createClient } from '@/lib/client';
 
 interface LeadCaptureProps {
   auditResult: AuditResult;
@@ -15,12 +14,11 @@ export default function LeadCapture({ auditResult, onSaved }: LeadCaptureProps) 
   const [role, setRole] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const [honeypot, setHoneypot] = useState(''); // abuse protection
+  const [honeypot, setHoneypot] = useState('');
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // Honeypot check — bots fill hidden fields
     if (honeypot) return;
 
     if (!email) {
@@ -32,34 +30,13 @@ export default function LeadCapture({ auditResult, onSaved }: LeadCaptureProps) 
     setError('');
 
     try {
-      const supabase = createClient();
-
-      // Save audit first
-      const { error: auditError } = await supabase.from('audits').insert({
-        id: auditResult.auditId,
-        recommendations: auditResult.recommendations,
-        total_monthly_savings: auditResult.totalMonthlySavings,
-        total_annual_savings: auditResult.totalAnnualSavings,
-        savings_category: auditResult.savingsCategory,
-        use_case: 'mixed',
-        team_size: 1,
-        is_public: true,
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, companyName, role, auditResult }),
       });
 
-      if (auditError && auditError.code !== '23505') {
-        // 23505 = duplicate key, audit already saved
-        throw auditError;
-      }
-
-      // Save lead
-      const { error: leadError } = await supabase.from('leads').insert({
-        audit_id: auditResult.auditId,
-        email,
-        company_name: companyName || null,
-        role: role || null,
-      });
-
-      if (leadError) throw leadError;
+      if (!response.ok) throw new Error('Failed to save');
 
       onSaved();
     } catch (err) {
@@ -81,7 +58,6 @@ export default function LeadCapture({ auditResult, onSaved }: LeadCaptureProps) 
       </p>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        {/* Honeypot — hidden from real users */}
         <input
           type="text"
           value={honeypot}
@@ -92,7 +68,6 @@ export default function LeadCapture({ auditResult, onSaved }: LeadCaptureProps) 
           autoComplete="off"
         />
 
-        {/* Email — required */}
         <div className="flex flex-col gap-1">
           <label
             htmlFor="email"
@@ -111,7 +86,6 @@ export default function LeadCapture({ auditResult, onSaved }: LeadCaptureProps) 
           />
         </div>
 
-        {/* Optional fields */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="flex flex-col gap-1">
             <label
@@ -161,8 +135,7 @@ export default function LeadCapture({ auditResult, onSaved }: LeadCaptureProps) 
         </button>
 
         <p className="text-xs text-gray-400">
-          No spam. Credex will only reach out if your savings opportunity is
-          significant.
+          No spam. We will only reach out if your savings opportunity is significant.
         </p>
       </form>
     </div>

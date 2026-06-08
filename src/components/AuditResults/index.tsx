@@ -51,15 +51,19 @@ export default function AuditResults({ result, formData }: AuditResultsProps) {
 
      
 
-      {/* Per-tool breakdown */}
-      <div className="bg-white border border-gray-200 rounded-lg mb-4">
-        <div className="px-5 py-4 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
-            Tool Breakdown
-          </h2>
-        </div>
-       
-      </div>
+     {/* Per-tool breakdown */}
+<div className="bg-white border border-gray-200 rounded-lg mb-4">
+  <div className="px-5 py-4 border-b border-gray-100">
+    <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">
+      Tool Breakdown
+    </h2>
+  </div>
+  <div className="px-5">
+    {result.recommendations.map((rec, index) => (
+      <ToolCard key={index} recommendation={rec} />
+    ))}
+  </div>
+</div>
 
       {/* AI Summary */}
       <div className="bg-white border border-gray-200 rounded-lg px-6 py-5 mb-4">
@@ -98,19 +102,6 @@ export default function AuditResults({ result, formData }: AuditResultsProps) {
         </div>
       )}
 
-      {/* Notify me — for optimal spend */}
-      {result.savingsCategory === 'optimal' && !reportSaved && (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg px-6 py-4 mb-4">
-          <p className="text-sm text-gray-600">
-            You are already spending well.{' '}
-            <span className="font-medium text-gray-900">
-              Save your report
-            </span>{' '}
-            above and we will notify you when new optimizations apply to your
-            stack.
-          </p>
-        </div>
-      )}
 
       {/* Share */}
       <div className="flex items-center justify-between bg-white border border-gray-200 rounded-lg px-5 py-4 mb-4">

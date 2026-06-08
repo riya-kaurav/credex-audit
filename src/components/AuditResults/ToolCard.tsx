@@ -11,10 +11,10 @@ export default function ToolCard({ recommendation }: ToolCardProps) {
     recommendation;
 
   const isOptimal = savingsAmount === 0 && recommendedAction === 'No changes needed';
-  const isCredex = tool === 'Credex';
+ 
   const hasRealSavings = savingsAmount > 0;
 
-  if (isCredex) return null; // Credex is handled by CredexCTA component
+
 
   return (
     <div className="flex flex-col sm:flex-row sm:items-start gap-4 py-4 border-b border-gray-100 last:border-0">
