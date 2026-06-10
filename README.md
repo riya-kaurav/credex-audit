@@ -6,12 +6,29 @@ SpendLens helps startup founders and engineering managers find out exactly where
 
 ---
 
-## Screenshots
+## System Diagram
 
-![Ss 1](https://github.com/user-attachments/assets/9aa23d2c-3afc-4086-a224-42783dc6c6b8)
-![Ss 2](https://github.com/user-attachments/assets/601fca42-1c4f-4008-b80e-4e0d71d55419)
-![Ss 3](https://github.com/user-attachments/assets/9ff2a952-5bfd-4f2e-af5f-b98c0e3ff355)
-
+```mermaid
+graph TD
+    A[User visits SpendLens] --> B[Landing Page /]
+    B --> C[Spend Input Form /audit]
+    C --> D{Form Submit}
+    D --> E[POST /api/audit\nServer-side API route]
+    E --> F[audit-engine.ts\nPure function, no AI\nRuns all 4 checks]
+    F --> G[AuditResult object\nwith UUID]
+    G --> H[Supabase\nSaved immediately\nis_public = true]
+    G --> I[sessionStorage\nFast path for results]
+    I --> J[Results Page /results/auditId]
+    H --> J
+    J --> K[HeroSection\nSavings numbers]
+    J --> L[ToolCard per tool\nRecommendations]
+    J --> M[Audit Summary\nFallback template]
+    J --> N[LeadCapture\nEmail capture]
+    N --> O[POST /api/leads]
+    O --> P[Supabase\nleads table]
+    O --> Q[Resend\nTransactional email\nHTML audit report]
+    J --> R[Share button\nCopy shareable URL]
+```
 
 ---
 
