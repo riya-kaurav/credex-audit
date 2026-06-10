@@ -38,7 +38,7 @@ graph TD
 
 ```bash
 git clone https://github.com/riya-kaurav/spendlens.git
-cd ai-audit
+cd credex-audit
 npm install
 ```
 
